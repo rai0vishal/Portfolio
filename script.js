@@ -936,14 +936,12 @@ document.addEventListener('DOMContentLoaded', function () {
         const totalStars = reposData.reduce((sum, repo) => sum + repo.stargazers_count, 0);
         document.getElementById('githubStars').textContent = totalStars;
 
-        // Calculate recent commits (last 30 days)
-        const thirtyDaysAgo = new Date();
-        thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
-
-        const commitsResponse = await fetch(`https://api.github.com/search/commits?q=author:${username}+committer-date:>${thirtyDaysAgo.toISOString().split('T')[0]}`);
+        // Calculate recent commits (using Events API to avoid CORS issues)
+        const commitsResponse = await fetch(`https://api.github.com/users/${username}/events/public`);
         if (commitsResponse.ok) {
-          const commitsData = await commitsResponse.json();
-          document.getElementById('githubCommits').textContent = commitsData.total_count;
+          const eventsData = await commitsResponse.json();
+          const pushEventsCount = eventsData.filter(event => event.type === 'PushEvent').length;
+          document.getElementById('githubCommits').textContent = pushEventsCount;
         }
 
         // Load activity feed

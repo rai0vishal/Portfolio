@@ -1,113 +1,66 @@
 <div align="center">
 
-# 💼 Abhijeet's Portfolio Website
+# 💼 Vishal Rai — Portfolio Website
+
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-Visit%20Site-blue?style=for-the-badge)](https://rai0vishal.github.io/Portfolio/)
+[![GitHub](https://img.shields.io/badge/GitHub-rai0vishal-black?style=for-the-badge&logo=github)](https://github.com/rai0vishal)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-VishalRai0108-blue?style=for-the-badge&logo=linkedin)](https://linkedin.com/in/VishalRai0108)
 
 </div>
 
-A modern, responsive personal portfolio website showcasing my work as a full-stack web developer. Built with HTML, CSS, JavaScript, Bootstrap, GSAP, and integrated with a stunning animated particle background.
+A modern, responsive personal portfolio website showcasing my work as a Full Stack MERN Developer. Built with HTML, CSS, JavaScript, GSAP animations, and integrated with live GitHub activity — designed to be fast, clean, and professional.
 
 ---
 
 ## 🚀 Features
 
 ### ✨ **Core Features**
-- Responsive design for all screen sizes  
-- Interactive hamburger menu for mobile view  
-- Hero section with animated name using GSAP  
-- Snowfall particle background using [particles.js](http://vincentgarreau.com/particles.js/#snow)  
-- Stylish "View Projects" button with neon glow effect  
-- Smooth scroll and clean layout  
+- Fully responsive design across all screen sizes
+- Animated hero section with GSAP-powered name reveal
+- Interactive loading screen animation
+- Smooth scroll navigation with active section detection
 - Custom cursor implementation
-- Animated download button for resume
+- Dark theme with consistent color system
+- Particle background in the Projects section
 
 ### 📧 **Contact Form**
-- Functional contact form with Formspree integration
-- Form validation and user feedback
-- Loading states and success/error messages
-- Professional styling with hover effects
-- Contact information display with icons
+- Functional contact form powered by Formspree
+- Client-side validation with real-time feedback
+- Loading states, success and error messages
+- Floating sidebar email link for quick access
 
-### ⚡ **Performance Optimizations**
-- Lazy loading for images
+### ⚡ **Performance**
+- Lazy loading for all images
+- Service Worker for offline caching (PWA-ready)
 - Reduced motion support for accessibility
-- Optimized animations with `will-change` and `contain`
-- Service Worker for offline functionality
-- PWA (Progressive Web App) support
-- Critical CSS optimization
-- Font loading optimization
+- Optimised GSAP animations with `will-change`
+- Critical resource preloading
 
 ### 🐙 **GitHub Integration**
-- Live GitHub statistics (repos, stars, followers, commits)
-- Recent activity feed with event types
+- Live GitHub stats — repos, stars, followers, recent commits
+- Recent public activity feed (Push, PR, Issue events)
 - Most used programming languages display
-- Real-time data from GitHub API
-- Fallback data for offline viewing
+- Graceful fallback data if API is unavailable
 
-### 🎨 **Enhanced UI/UX**
-- Dark theme with custom color scheme
-- Smooth animations and transitions
-- Interactive elements with hover effects
-- Accessibility improvements
-- Print-friendly styles
+### 🎨 **UI / UX**
+- GSAP ScrollTrigger animations on scroll
+- Hover effects on all interactive elements
+- Animated skill icon grid
+- Project cards with tech badges, live demo, and GitHub links
+- Timeline-style Journey section
 
 ---
 
 ## 🛠️ Tech Stack
 
-- **HTML5** – Semantic markup with accessibility features
-- **CSS3** – Custom styling + Bootstrap 5 + Tailwind CSS
-- **JavaScript** – Core interactivity, animations, and API integrations
-- **GSAP** – Advanced animations and scroll triggers
-- **Particles.js** – Interactive particle backgrounds
-- **Formspree** – Contact form backend
-- **GitHub API** – Live coding activity integration
-- **Service Worker** – Offline functionality and caching
-
----
-
-## 📱 PWA Features
-
-- **Installable** – Can be installed as a native app
-- **Offline Support** – Works without internet connection
-- **Fast Loading** – Optimized caching and performance
-- **App-like Experience** – Full-screen mode and native feel
-
----
-
-## 📸 Live Preview
-
-👉 [Live Demo](https://abhijeetbhale.github.io/Portfolio/)
-
-## 📸 Screenshot
-
-![Portfolio Website](https://github.com/abhijeetBhale/Portfolio/blob/4153aac777d27ad5cc2aaa4ded9a3b347b8c8d9e/assets/portfolio-ss.png)
-
----
-
-## 🚀 Getting Started
-
-1. **Clone the repository**
-   ```bash
-   git clone https://github.com/abhijeetBhale/Portfolio.git
-   cd Portfolio
-   ```
-
-2. **Open in browser**
-   ```bash
-   # Using Python
-   python -m http.server 8000
-   
-   # Using Node.js
-   npx serve .
-   
-   # Or simply open index.html in your browser
-   ```
-
-3. **Customize**
-   - Update personal information in `index.html`
-   - Modify colors in `styles.css`
-   - Add your own projects and content
-   - Update GitHub username in `script.js`
+- **HTML5** — Semantic markup with accessibility attributes
+- **CSS3** — Custom styles + Bootstrap 5 + Tailwind CSS (Play CDN)
+- **JavaScript (ES6+)** — Core interactivity, GitHub API, form handling
+- **GSAP 3** — Hero animations, scroll reveals, timeline effects
+- **Particles.js** — Particle background in Projects section
+- **Formspree** — Contact form backend (no server required)
+- **GitHub API** — Live coding activity and stats
+- **Service Worker** — Offline support and asset caching
 
 ---
 
@@ -115,45 +68,90 @@ A modern, responsive personal portfolio website showcasing my work as a full-sta
 
 ```
 Portfolio/
-├── index.html          # Main HTML file
-├── styles.css          # Custom styles and animations
-├── script.js           # JavaScript functionality
-├── manifest.json       # PWA manifest
-├── sw.js              # Service Worker
-├── assets/            # Images and media files
-└── README.md          # Project documentation
+├── index.html        # Main HTML — all sections live here
+├── styles.css        # Custom styles and animation definitions
+├── script.js         # All JS — GitHub API, GSAP, form, cursor
+├── sw.js             # Service Worker for PWA/offline support
+├── manifest.json     # PWA manifest
+├── assets/           # Images, screenshots, resume PDF
+│   ├── VishalRaiPortfolio.jpg      # Profile photo
+│   ├── Vishal_Rai_Resume.pdf       # Downloadable resume
+│   ├── taskflow-ss.png             # TaskFlow screenshot
+│   ├── skillx-ss.png               # SKillX screenshot
+│   └── ...                         # Other project screenshots
+└── README.md
 ```
 
 ---
 
-## 🔧 Configuration
+## 🧩 Sections
 
-### Contact Form
-Update the Formspree endpoint in `script.js`:
+| Section | Description |
+|---|---|
+| **Hero** | Animated name reveal, tagline, View Projects CTA |
+| **About** | Bio, profile photo, social links, resume download |
+| **Journey** | Timeline — Internship, B.Tech, XII, X |
+| **Skills** | Tech stack icons grouped by Frontend / Backend / Database / Tools |
+| **GitHub Activity** | Live stats + recent public events |
+| **Projects** | Cards with screenshots, tech badges, live demo + GitHub links |
+| **Contact** | Formspree form + email + location info |
+
+---
+
+## 🔧 Setup & Configuration
+
+### Run Locally
+
+```bash
+# Clone the repo
+git clone https://github.com/rai0vishal/Portfolio.git
+cd Portfolio
+
+# Open with a local server (recommended)
+npx serve .
+
+# Or simply open index.html directly in your browser
+```
+
+### Configure Contact Form
+
+1. Create a free account at [formspree.io](https://formspree.io)
+2. Create a new form and copy your endpoint
+3. In `script.js`, replace the endpoint:
+
 ```javascript
 const response = await fetch('https://formspree.io/f/YOUR_FORM_ID', {
 ```
 
-### GitHub Integration
-Update your GitHub username in `script.js`:
+### Configure GitHub Stats
+
+In `script.js`, the username is already set to:
+
 ```javascript
-const username = 'YOUR_GITHUB_USERNAME';
+const username = 'rai0vishal';
 ```
 
----
-
-## 📈 Performance
-
-- **Lighthouse Score**: 95+ (Performance, Accessibility, Best Practices, SEO)
-- **First Contentful Paint**: < 1.5s
-- **Largest Contentful Paint**: < 2.5s
-- **Cumulative Layout Shift**: < 0.1
+Update this if you fork and customise for yourself.
 
 ---
 
-## 🤝 Contributing
+## 🌟 Featured Projects
 
-Contributions are welcome! Please feel free to submit a Pull Request.
+### [TaskFlow](https://github.com/rai0vishal/TaskFlow)
+Full-stack Kanban project management app with real-time collaboration via Socket.IO, drag-and-drop boards, RBAC, and JWT authentication.
+`React.js` `Node.js` `Express.js` `MongoDB` `Socket.IO` `JWT`
+
+### [SKillX](https://github.com/rai0vishal/SKillX)
+AI-powered peer-to-peer skill exchange platform with WebRTC video sessions, Gemini AI roadmap generation, custom matching algorithm, and Firebase auth.
+`React.js` `Node.js` `MongoDB` `WebRTC` `Gemini AI` `Socket.IO` `Firebase`
+
+---
+
+## 📱 PWA Support
+
+- Installable as a native app on mobile and desktop
+- Offline support via Service Worker caching
+- Optimised for fast load on all network conditions
 
 ---
 
@@ -165,8 +163,7 @@ This project is open source and available under the [MIT License](LICENSE).
 
 ## 📞 Contact
 
-- **Email**: abhijeetbhale7@gmail.com
-- **LinkedIn**: [Abhijeet Bhale](https://www.linkedin.com/in/abhijeetbhale7)
-- **GitHub**: [@abhijeetBhale](https://github.com/abhijeetBhale)
-- **Instagram**: [@isocyanideisgood](https://www.instagram.com/isocyanideisgood)
-
+- **Email**: raivishal2121@gmail.com
+- **LinkedIn**: [linkedin.com/in/VishalRai0108](https://linkedin.com/in/VishalRai0108)
+- **GitHub**: [@rai0vishal](https://github.com/rai0vishal)
+- **Location**: Lucknow, Uttar Pradesh, India
