@@ -142,7 +142,7 @@ Full-stack Kanban project management app with real-time collaboration via Socket
 `React.js` `Node.js` `Express.js` `MongoDB` `Socket.IO` `JWT`
 
 ### [SKillX](https://github.com/rai0vishal/SKillX)
-AI-powered peer-to-peer skill exchange platform with WebRTC video sessions, Gemini AI roadmap generation, custom matching algorithm, and Firebase auth.
+AI-powered peer-to-peer skill exchange platform with WebRTC video sessions, Gemini AI roadmap generation, custom matching algorithm, and Firebase auth
 `React.js` `Node.js` `MongoDB` `WebRTC` `Gemini AI` `Socket.IO` `Firebase`
 
 ---
