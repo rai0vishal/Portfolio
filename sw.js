@@ -1,13 +1,14 @@
-const CACHE_NAME = 'vishal-portfolio-v1';
+const CACHE_NAME = 'vishal-portfolio-v12';
 const urlsToCache = [
-  '/',
-  '/index.html',
-  '/styles.css',
-  '/script.js',
-  '/assets/VishalRaiPortfolio.jpg'
+  './',
+  'index.html',
+  'styles.css',
+  'script.js',
+  'assets/VishalRaiPortfolio.jpg'
 ];
 
 self.addEventListener('install', event => {
+  self.skipWaiting();
   event.waitUntil(
     caches.open(CACHE_NAME).then(cache => cache.addAll(urlsToCache))
   );
@@ -27,6 +28,6 @@ self.addEventListener('activate', event => {
       Promise.all(
         keys.filter(key => key !== CACHE_NAME).map(key => caches.delete(key))
       )
-    )
+    ).then(() => self.clients.claim())
   );
 });

@@ -28,11 +28,6 @@ gsap.to(letters, {
         duration: 0.2,
         delay: i * 0.15 + 0.4,
       });
-      gsap.to(el.querySelector("::after"), {
-        opacity: 1,
-        duration: 0.2,
-        delay: i * 0.15,
-      });
     });
   },
   onComplete: () => {
@@ -49,35 +44,31 @@ gsap.to(letters, {
 
 
 // Animation for Hero Text
-gsap.from(".hero-left", {
+gsap.from(".hero-section .container > *", {
   opacity: 0,
-  x: -50,
+  y: 30,
   duration: 1.2,
-  ease: "power3.out",
+  stagger: 0.15,
+  ease: "power3.out"
 });
 
-gsap.from(".hero-right", {
-  opacity: 0,
-  x: 50,
-  duration: 1.2,
-  ease: "power3.out",
-  delay: 0.3,
-});
-
-gsap.utils.toArray(".journey-card").forEach((card, index) => {
-  gsap.from(card, {
-    opacity: 0,
-    y: 80,
-    duration: .4,
-    ease: "power3.out",
-    scrollTrigger: {
-      trigger: card,
-      start: "top 85%",
-      toggleActions: "play none none reverse",
-    },
-    delay: index * 0.1,
-  });
-});
+gsap.utils.toArray(".journey-card").forEach(
+  (card, index) => {
+    gsap.from(card, {
+      opacity: 0,
+      y: 60,
+      x: -30,
+      duration: 0.7,
+      delay: index * 0.15,
+      ease: "power2.out",
+      scrollTrigger: {
+        trigger: card,
+        start: "top 88%",
+        toggleActions: "play none none none",
+      },
+    });
+  }
+);
 
 // HERO SECTION LINE WAVES BACKGROUND
 function initLineWaves(containerId, options = {}) {
@@ -453,17 +444,22 @@ gsap.utils.toArray('.fade-in').forEach((el) => {
   });
 });
 
-gsap.from(".project-card", {
-  scrollTrigger: {
-    trigger: ".project-card",
-    start: "top 85%",
-    toggleActions: "play none none reset"
-  },
-  opacity: 0,
-  y: 60,
-  duration: 1,
-  ease: "power3.out"
-});
+gsap.utils.toArray(".project-card").forEach(
+  (card, index) => {
+    gsap.from(card, {
+      opacity: 0,
+      y: 50,
+      duration: 0.6,
+      delay: index * 0.12,
+      ease: "power2.out",
+      scrollTrigger: {
+        trigger: card,
+        start: "top 88%",
+        toggleActions: "play none none none",
+      },
+    });
+  }
+);
 
 gsap.from("#about-img", {
   scrollTrigger: {
@@ -489,77 +485,6 @@ gsap.from("#about-text", {
   duration: .4,
   ease: "power3.out",
   delay: 0.2
-});
-
-gsap.from("#techstack h2", {
-  scrollTrigger: {
-    trigger: "#techstack",
-    start: "top 80%",
-    toggleActions: "play none none reset"
-  },
-  opacity: 0,
-  y: -40,
-  duration: 1.2,
-  ease: "power3.out"
-});
-
-gsap.utils.toArray("#techstack .group").forEach((card, i) => {
-  gsap.from(card, {
-    scrollTrigger: {
-      trigger: card,
-      start: "top 85%",
-      toggleActions: "play none none reset"
-    },
-    opacity: 0,
-    y: 50,
-    duration: 1,
-    ease: "power3.out",
-    delay: i * 0.1,
-  });
-});
-
-gsap.utils.toArray('.tech-category').forEach((section, index) => {
-  gsap.from(section, {
-    opacity: 0,
-    y: 60,
-    duration: 0.8,
-    ease: "power3.out",
-    scrollTrigger: {
-      trigger: section,
-      start: "top 80%",
-      toggleActions: "play none none reverse"
-    }
-  });
-});
-
-gsap.utils.toArray('.reveal-section').forEach(section => {
-  gsap.from(section, {
-    opacity: 0,
-    y: 60,
-    duration: 1,
-    scrollTrigger: {
-      trigger: section,
-      start: "top 80%",
-      toggleActions: "play none none reset"
-    }
-  });
-});
-
-// Up coming projects
-
-gsap.utils.toArray(".upcoming-card").forEach((card, i) => {
-  gsap.from(card, {
-    scrollTrigger: {
-      trigger: "#upcoming-projects",
-      start: "top 85%",
-      toggleActions: "play none none reset"
-    },
-    opacity: 0,
-    y: 60,
-    duration: 1,
-    ease: "power3.out",
-    delay: i * 0.15,
-  });
 });
 
 // Animated Download Button Functionality
@@ -894,7 +819,7 @@ document.addEventListener('DOMContentLoaded', function () {
   // Service Worker registration for PWA features
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
-      navigator.serviceWorker.register('/sw.js')
+      navigator.serviceWorker.register('./sw.js')
         .then(registration => {
           console.log('SW registered: ', registration);
         })
@@ -912,11 +837,10 @@ document.addEventListener('DOMContentLoaded', function () {
   // GitHub API endpoints
   const endpoints = {
     user: `https://api.github.com/users/${username}`,
-    repos: `https://api.github.com/users/${username}/repos`,
-    activity: `https://api.github.com/users/${username}/events`
+    repos: `https://api.github.com/users/${username}/repos`
   };
 
-  // Fetch GitHub user data
+  // Fetch GitHub user data and update stat cards
   async function fetchGitHubData() {
     try {
       const [userResponse, reposResponse] = await Promise.all([
@@ -943,12 +867,6 @@ document.addEventListener('DOMContentLoaded', function () {
           const pushEventsCount = eventsData.filter(event => event.type === 'PushEvent').length;
           document.getElementById('githubCommits').textContent = pushEventsCount;
         }
-
-        // Load activity feed
-        loadGitHubActivity();
-
-        // Load language stats
-        loadGitHubLanguages(reposData);
       }
     } catch (error) {
       console.error('Error fetching GitHub data:', error);
@@ -958,110 +876,6 @@ document.addEventListener('DOMContentLoaded', function () {
       document.getElementById('githubFollowers').textContent = '10+';
       document.getElementById('githubCommits').textContent = '50+';
     }
-  }
-
-  // Load GitHub activity
-  async function loadGitHubActivity() {
-    try {
-      const response = await fetch(endpoints.activity);
-      if (response.ok) {
-        const activityData = await response.json();
-        const activityContainer = document.getElementById('githubActivity');
-
-        // Clear loading state
-        activityContainer.innerHTML = '';
-
-        // Show recent activity (last 5 events)
-        const recentActivity = activityData.slice(0, 5);
-
-        recentActivity.forEach(event => {
-          const activityItem = createActivityItem(event);
-          activityContainer.appendChild(activityItem);
-        });
-      }
-    } catch (error) {
-      console.error('Error loading GitHub activity:', error);
-    }
-  }
-
-  // Create activity item element
-  function createActivityItem(event) {
-    const item = document.createElement('div');
-    item.className = 'flex items-center space-x-4 p-4 bg-[#0a0a0a] rounded-lg border border-gray-800';
-
-    const eventType = event.type;
-    const repoName = event.repo?.name || 'Unknown Repository';
-    const createdAt = new Date(event.created_at).toLocaleDateString();
-
-    let icon, text;
-
-    switch (eventType) {
-      case 'PushEvent':
-        icon = 'fas fa-code';
-        text = `Pushed to ${repoName}`;
-        break;
-      case 'CreateEvent':
-        icon = 'fas fa-plus';
-        text = `Created ${repoName}`;
-        break;
-      case 'ForkEvent':
-        icon = 'fas fa-code-branch';
-        text = `Forked ${repoName}`;
-        break;
-      case 'WatchEvent':
-        icon = 'fas fa-star';
-        text = `Starred ${repoName}`;
-        break;
-      default:
-        icon = 'fas fa-circle';
-        text = `Activity in ${repoName}`;
-    }
-
-    item.innerHTML = `
-      <div class="w-10 h-10 bg-[#1DCD9F] rounded-full flex items-center justify-center">
-        <i class="${icon} text-white"></i>
-      </div>
-      <div class="flex-1">
-        <p class="text-white font-medium">${text}</p>
-        <p class="text-gray-400 text-sm">${createdAt}</p>
-      </div>
-      <a href="https://github.com/${repoName}" target="_blank" class="text-[#1DCD9F] hover:text-[#17b890]">
-        <i class="fas fa-external-link-alt"></i>
-      </a>
-    `;
-
-    return item;
-  }
-
-  // Load GitHub languages
-  function loadGitHubLanguages(reposData) {
-    const languageStats = {};
-
-    reposData.forEach(repo => {
-      if (repo.language) {
-        languageStats[repo.language] = (languageStats[repo.language] || 0) + 1;
-      }
-    });
-
-    // Sort languages by frequency
-    const sortedLanguages = Object.entries(languageStats)
-      .sort(([, a], [, b]) => b - a)
-      .slice(0, 6);
-
-    const languagesContainer = document.getElementById('githubLanguages');
-    languagesContainer.innerHTML = '';
-
-    sortedLanguages.forEach(([language, count]) => {
-      const languageCard = document.createElement('div');
-      languageCard.className = 'bg-[#111] p-4 rounded-xl border border-gray-800 text-center hover:border-[#1DCD9F] transition-all duration-300';
-
-      languageCard.innerHTML = `
-        <div class="text-2xl font-bold text-[#1DCD9F] mb-2">${language}</div>
-        <div class="text-gray-400 text-sm">${count} repositories</div>
-      `;
-
-      languagesContainer.appendChild(languageCard);
-    });
   }
 
   // Initialize GitHub data loading
@@ -1105,3 +919,33 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 });
 
+window.addEventListener('scroll', () => {
+  const scrollTop =
+    document.documentElement.scrollTop || document.body.scrollTop;
+  const height =
+    document.documentElement.scrollHeight -
+    document.documentElement.clientHeight;
+  const progress = (scrollTop / height) * 100;
+  const bar = document.getElementById('scroll-progress');
+  if (bar) bar.style.width = progress + '%';
+});
+
+const typed = new Typed('#typed-tagline', {
+  strings: [
+    'Full Stack MERN Developer.',
+    'React.js Developer.',
+    'Backend Developer.',
+    'Real-Time App Builder.',
+    'Open to SDE-1 Roles.'
+  ],
+  typeSpeed: 55,
+  backSpeed: 30,
+  backDelay: 1800,
+  loop: true,
+  smartBackspace: true
+});
+
+// Refresh ScrollTrigger after full page load to ensure trigger positions are correct
+window.addEventListener('load', () => {
+  ScrollTrigger.refresh();
+});

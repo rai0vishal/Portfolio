@@ -958,3 +958,174 @@ html {
     padding: 0.375rem;
   }
 }
+
+#scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  width: 0%;
+  background: linear-gradient(90deg, #00ff88, #00bfff);
+  z-index: 99999;
+  transition: width 0.1s linear;
+  border-radius: 0 2px 2px 0;
+}
+
+.open-to-work-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(0, 255, 136, 0.08);
+  border: 1px solid rgba(0, 255, 136, 0.3);
+  color: #00ff88;
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  padding: 6px 14px;
+  border-radius: 999px;
+  margin-bottom: 20px;
+  width: fit-content;
+}
+
+.pulse-dot {
+  width: 8px;
+  height: 8px;
+  background: #00ff88;
+  border-radius: 50%;
+  display: inline-block;
+  animation: pulse-green 1.8s ease-in-out infinite;
+}
+
+@keyframes pulse-green {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(0, 255, 136, 0.5);
+  }
+  50% {
+    transform: scale(1.15);
+    box-shadow: 0 0 0 6px rgba(0, 255, 136, 0);
+  }
+}
+
+/* Profile photo — About section */
+.profile-photo-large {
+  width: 280px !important;
+  height: 340px !important;
+  object-fit: cover;
+  object-position: center top;
+  max-width: 100%;
+  display: block;
+  border-radius: 12px;
+}
+
+@media (max-width: 768px) {
+  .profile-photo-large {
+    width: 200px !important;
+    height: 240px !important;
+  }
+}
+
+@media (max-width: 768px) {
+  #about-text {
+    text-align: center !important;
+  }
+}
+
+/* Project Card Styles */
+.project-card {
+  background: rgba(255, 255, 255, 0.03) !important;
+  color: #fff !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  border-radius: 16px !important;
+  overflow: hidden !important;
+  transition: transform 0.3s ease, 
+              border-color 0.3s ease,
+              box-shadow 0.3s ease !important;
+}
+
+.project-card:hover {
+  transform: translateY(-8px) !important;
+  border-color: rgba(0, 255, 136, 0.4) !important;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4),
+              0 0 20px rgba(0, 255, 136, 0.08) !important;
+}
+
+/* Image zoom on hover */
+.project-card img {
+  transition: transform 0.4s ease !important;
+}
+
+.project-card:hover img {
+  transform: scale(1.04) !important;
+}
+
+/* Project title transition & hover colour shift */
+.project-card h3 {
+  color: #fff !important;
+  transition: color 0.3s ease !important;
+}
+
+.project-card:hover .project-title,
+.project-card:hover h3 {
+  color: #00ff88 !important;
+}
+
+/* Live Demo button pulse on hover */
+.project-card a:first-of-type {
+  transition: box-shadow 0.3s ease, background-color 0.3s ease !important;
+}
+
+.project-card:hover .live-demo-btn,
+.project-card:hover a[class*="bg-[#1DCD9F]"],
+.project-card:hover a:first-of-type {
+  box-shadow: 0 0 12px rgba(0, 255, 136, 0.4) !important;
+}
+
+/* Adjust card text and badge colors for dark background readability */
+.project-card p {
+  color: rgba(255, 255, 255, 0.7) !important;
+}
+
+.project-card span.bg-gray-100 {
+  background: rgba(255, 255, 255, 0.06) !important;
+  color: rgba(255, 255, 255, 0.85) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+/* Journey Timeline Card Styles */
+.journey-card {
+  transition: transform 0.3s ease,
+              border-color 0.3s ease,
+              box-shadow 0.3s ease !important;
+}
+
+.journey-card:hover {
+  transform: translateX(6px) !important;
+  border-color: rgba(0, 255, 136, 0.35) !important;
+  box-shadow: -4px 0 20px rgba(0, 255, 136, 0.08) !important;
+}
+
+.journey-card:hover h3,
+.journey-card:hover .journey-title {
+  color: #00ff88 !important;
+  transition: color 0.3s ease !important;
+}
+
+/* GitHub Stat Cards Entrance Animation */
+.github-stat-card {
+  opacity: 1 !important;
+  visibility: visible !important;
+  animation: statFadeUp 0.5s ease forwards;
+  animation-delay: calc(var(--card-index, 0) * 0.1s);
+}
+
+@keyframes statFadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
