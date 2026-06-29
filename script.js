@@ -463,28 +463,30 @@ gsap.utils.toArray(".project-card").forEach(
 
 gsap.from("#about-img", {
   scrollTrigger: {
-    trigger: "#about-img",
-    start: "top 80%",
-    toggleActions: "play none none reset",
+    trigger: "#about",
+    start: "top 75%",
+    toggleActions: "play none none none",
   },
   opacity: 0,
-  x: -100,
-  duration: .4,
-  ease: "power3.out"
+  x: -60,
+  duration: 1.4,
+  ease: "power3.out",
+  clearProps: "all"
 });
 
 
 gsap.from("#about-text", {
   scrollTrigger: {
-    trigger: "#about-text",
-    start: "top 80%",
-    toggleActions: "play none none reset",
+    trigger: "#about",
+    start: "top 75%",
+    toggleActions: "play none none none",
   },
   opacity: 0,
-  y: 50,
-  duration: .4,
+  x: 60,
+  duration: 1.4,
+  delay: 0.3,
   ease: "power3.out",
-  delay: 0.2
+  clearProps: "all"
 });
 
 // Animated Download Button Functionality
@@ -949,3 +951,47 @@ const typed = new Typed('#typed-tagline', {
 window.addEventListener('load', () => {
   ScrollTrigger.refresh();
 });
+
+// Skills — category by category scroll reveal
+const skillCategoryRows = document.querySelectorAll(
+  '.skill-category-row'
+);
+
+if (skillCategoryRows.length > 0) {
+
+  const categoryObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+
+          const row = entry.target;
+
+          // 1. Reveal the category label row itself
+          setTimeout(() => {
+            row.classList.add('skill-visible');
+          }, 0);
+
+          // 2. Reveal each skill item inside this 
+          //    row one by one with stagger
+          const items = row.querySelectorAll('.skill-item');
+          items.forEach((item, i) => {
+            setTimeout(() => {
+              item.classList.add('skill-visible');
+            }, 120 + (i * 80));
+          });
+
+          // Stop observing this row once revealed
+          categoryObserver.unobserve(row);
+        }
+      });
+    },
+    {
+      threshold: 0.2,
+      rootMargin: '0px 0px -60px 0px'
+    }
+  );
+
+  skillCategoryRows.forEach(row => {
+    categoryObserver.observe(row);
+  });
+}

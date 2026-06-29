@@ -1129,3 +1129,51 @@ html {
     transform: translateY(0);
   }
 }
+
+/* Skill Item Hover Effects */
+.skill-item {
+  transition: transform 0.2s ease;
+  cursor: default;
+}
+
+.skill-item:hover {
+  transform: translateY(-6px);
+}
+
+.skill-item:hover i,
+.skill-item:hover img {
+  filter: drop-shadow(0 0 8px rgba(0, 255, 136, 0.5));
+}
+
+.skill-item:hover span,
+.skill-item:hover p {
+  color: #00ff88;
+  transition: color 0.2s ease;
+}
+
+/* All skill items start hidden */
+.skill-item {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.45s ease,
+              transform 0.45s ease;
+}
+
+/* Revealed state */
+.skill-item.skill-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Category label starts hidden */
+.skill-category-row {
+  opacity: 0;
+  transform: translateX(-24px);
+  transition: opacity 0.5s ease,
+              transform 0.5s ease;
+}
+
+.skill-category-row.skill-visible {
+  opacity: 1;
+  transform: translateX(0);
+}

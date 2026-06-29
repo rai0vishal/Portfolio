@@ -1,4 +1,4 @@
-const CACHE_NAME = 'vishal-portfolio-v12';
+const CACHE_NAME = 'vishal-portfolio-v16';
 const urlsToCache = [
   './',
   'index.html',
