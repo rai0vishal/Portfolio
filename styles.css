@@ -1,6 +1,11 @@
 /* Reset & basic setup */
 @import url('https://fonts.googleapis.com/css2?family=Special+Gothic+Expanded+One&display=swap');
 
+html, body {
+  overflow-x: hidden;
+  max-width: 100%;
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -204,6 +209,13 @@
 
 .fixed-email:hover {
   cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .fixed-email,
+  [style*="writing-mode"] {
+    display: none !important;
+  }
 }
 
 
@@ -1399,4 +1411,15 @@ html {
 #contact [class*="grid-cols"],
 #contact-form [class*="grid-cols"] {
   align-items: start !important;
+}
+
+.contact-icon,
+#contact .icon-circle,
+#contact [class*="rounded-full"] {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  min-width: 44px !important;
+  min-height: 44px !important;
+  flex-shrink: 0 !important;
 }
