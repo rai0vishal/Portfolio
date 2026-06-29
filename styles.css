@@ -649,6 +649,7 @@
   .example-2 .icon-content a,
   .category-label,
   input[type="checkbox"],
+  .tech-badge,
   [data-scroll] {
     cursor: url('./assets/cursor.png'), pointer;
   }
@@ -1033,11 +1034,14 @@ html {
 
 /* Project Card Styles */
 .project-card {
-  background: rgba(255, 255, 255, 0.03) !important;
-  color: #fff !important;
-  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  background: #0d0d0d !important;
+  border: 1px solid rgba(255,255,255,0.08) !important;
   border-radius: 16px !important;
   overflow: hidden !important;
+  color: #ffffff !important;
+  height: auto !important;
+  display: flex !important;
+  flex-direction: column !important;
   transition: transform 0.3s ease, 
               border-color 0.3s ease,
               box-shadow 0.3s ease !important;
@@ -1051,11 +1055,25 @@ html {
 }
 
 /* Image zoom on hover */
-.project-card img {
+.project-card > img {
+  width: 100% !important;
+  height: 220px !important;
+  object-fit: cover !important;
+  object-position: top !important;
+  display: block !important;
+  flex-shrink: 0 !important;
   transition: transform 0.4s ease !important;
 }
 
-.project-card:hover img {
+.project-card > div {
+  padding: 20px !important;
+  background: #0d0d0d !important;
+  flex: 1 !important;
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+.project-card:hover > img {
   transform: scale(1.04) !important;
 }
 
@@ -1086,10 +1104,56 @@ html {
   color: rgba(255, 255, 255, 0.7) !important;
 }
 
-.project-card span.bg-gray-100 {
-  background: rgba(255, 255, 255, 0.06) !important;
-  color: rgba(255, 255, 255, 0.85) !important;
-  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+/* Tech badge pill — compact horizontal chip */
+.tech-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 10px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 999px;
+  font-size: 0.72rem;
+  color: #cccccc;
+  white-space: nowrap;
+  transition: border-color 0.2s ease,
+              color 0.2s ease;
+}
+
+.tech-badge:hover {
+  border-color: rgba(0, 255, 136, 0.4);
+  color: #ffffff;
+}
+
+/* Icon inside badge — must be small */
+.tech-badge i,
+.tech-badge img {
+  width: 14px !important;
+  height: 14px !important;
+  font-size: 14px !important;
+  flex-shrink: 0;
+  display: inline-block;
+}
+
+/* Badge container — horizontal wrap row */
+.tech-badges-container,
+.project-card .flex.flex-wrap,
+.project-card [class*="flex-wrap"] {
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: wrap !important;
+  gap: 6px !important;
+  margin-top: 12px;
+  margin-bottom: 16px;
+}
+
+/* Force devicons to correct size inside badges */
+.tech-badge [class*="devicon"],
+.tech-badge [class*="devicon-"] {
+  font-size: 14px !important;
+  width: 14px !important;
+  height: 14px !important;
+  line-height: 1 !important;
 }
 
 /* Journey Timeline Card Styles */
@@ -1111,12 +1175,44 @@ html {
   transition: color 0.3s ease !important;
 }
 
-/* GitHub Stat Cards Entrance Animation */
 .github-stat-card {
+  background: rgba(255,255,255,0.03) !important;
+  border: 1px solid rgba(255,255,255,0.08) !important;
+  border-radius: 16px;
+  padding: 28px 20px;
+  text-align: center;
+  transition: transform 0.3s ease,
+              border-color 0.3s ease;
   opacity: 1 !important;
   visibility: visible !important;
-  animation: statFadeUp 0.5s ease forwards;
-  animation-delay: calc(var(--card-index, 0) * 0.1s);
+  position: relative;
+  overflow: hidden;
+}
+
+.github-stat-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(0, 255, 136, 0.35);
+}
+
+.github-stat-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    #00ff88,
+    transparent
+  );
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.github-stat-card:hover::before {
+  opacity: 1;
 }
 
 @keyframes statFadeUp {
@@ -1176,4 +1272,131 @@ html {
 .skill-category-row.skill-visible {
   opacity: 1;
   transform: translateX(0);
+}
+
+/* Contact form card */
+.contact-form-card,
+#contact form,
+#contact-form form,
+#contact .bg-white,
+#contact-form .bg-white,
+#contact [class*="bg-white"],
+#contact-form [class*="bg-white"] {
+  background: rgba(255, 255, 255, 0.03) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  border-radius: 16px !important;
+  color: #ffffff !important;
+}
+
+/* Form input fields */
+#contact input,
+#contact-form input,
+#contact select,
+#contact-form select,
+#contact textarea,
+#contact-form textarea {
+  background: rgba(255, 255, 255, 0.05) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  border-radius: 8px !important;
+  color: #ffffff !important;
+  padding: 12px 16px !important;
+}
+
+/* Input focus state */
+#contact input:focus,
+#contact-form input:focus,
+#contact select:focus,
+#contact-form select:focus,
+#contact textarea:focus,
+#contact-form textarea:focus {
+  border-color: rgba(0, 255, 136, 0.4) !important;
+  outline: none !important;
+  box-shadow: 0 0 0 3px rgba(0, 255, 136, 0.08) !important;
+}
+
+/* Input placeholder text */
+#contact input::placeholder,
+#contact-form input::placeholder,
+#contact textarea::placeholder,
+#contact-form textarea::placeholder {
+  color: rgba(255, 255, 255, 0.3) !important;
+}
+
+/* Select dropdown */
+#contact select,
+#contact-form select {
+  color: rgba(255, 255, 255, 0.7) !important;
+  cursor: pointer;
+}
+
+#contact select option,
+#contact-form select option {
+  background: #111111;
+  color: #ffffff;
+}
+
+/* Form labels */
+#contact label,
+#contact-form label {
+  color: rgba(255, 255, 255, 0.85) !important;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+/* Red asterisk on required fields */
+#contact label span,
+#contact-form label span,
+#contact .required-star,
+#contact-form .required-star {
+  color: #ff4444 !important;
+}
+
+/* Tip text below message field */
+#contact .tip-text,
+#contact-form .tip-text,
+#contact [class*="tip"],
+#contact-form [class*="tip"],
+#contact p[style*="color"],
+#contact-form p[style*="color"] {
+  color: rgba(255, 255, 255, 0.4) !important;
+}
+
+/* Send Message button — keep it green */
+#contact button[type="submit"],
+#contact-form button[type="submit"],
+#contact .submit-btn,
+#contact-form .submit-btn {
+  background: #00ff88 !important;
+  color: #000000 !important;
+  font-weight: 600 !important;
+  border: none !important;
+  border-radius: 8px !important;
+  padding: 14px !important;
+  width: 100% !important;
+  cursor: pointer !important;
+  transition: opacity 0.2s ease !important;
+}
+
+#contact button[type="submit"]:hover,
+#contact-form button[type="submit"]:hover {
+  opacity: 0.88 !important;
+}
+
+#contact form,
+#contact-form form,
+#contact .contact-form-card,
+#contact-form .contact-form-card,
+#contact [class*="bg-transparent"],
+#contact-form [class*="bg-transparent"] {
+  border: 1px solid rgba(255, 255, 255, 0.07) !important;
+  background: rgba(255, 255, 255, 0.02) !important;
+}
+
+#contact .grid,
+#contact-form .grid,
+#contact .flex,
+#contact-form .flex,
+#contact [class*="grid-cols"],
+#contact-form [class*="grid-cols"] {
+  align-items: start !important;
 }

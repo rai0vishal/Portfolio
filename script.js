@@ -833,56 +833,192 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 // GitHub API Integration
-document.addEventListener('DOMContentLoaded', function () {
+async function fetchGitHubStats() {
   const username = 'rai0vishal';
 
-  // GitHub API endpoints
-  const endpoints = {
-    user: `https://api.github.com/users/${username}`,
-    repos: `https://api.github.com/users/${username}/repos`
-  };
+  // Show loading dots initially
+  const statIds = [
+    'githubRepos',
+    'githubStars',
+    'githubFollowers',
+    'githubCommits'
+  ];
 
-  // Fetch GitHub user data and update stat cards
-  async function fetchGitHubData() {
-    try {
-      const [userResponse, reposResponse] = await Promise.all([
-        fetch(endpoints.user),
-        fetch(endpoints.repos)
-      ]);
+  statIds.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) {
+      el.textContent = '...';
+      el.style.opacity = '0.5';
+    }
+  });
 
-      if (userResponse.ok && reposResponse.ok) {
-        const userData = await userResponse.json();
-        const reposData = await reposResponse.json();
+  try {
+    // Fetch user profile
+    const userRes = await fetch(
+      `https://api.github.com/users/${username}`,
+      { headers: { 
+        'Accept': 'application/vnd.github.v3+json' 
+      }}
+    );
+    if (!userRes.ok) throw new Error('User fetch failed');
+    const userData = await userRes.json();
 
-        // Update stats
-        document.getElementById('githubRepos').textContent = userData.public_repos;
-        document.getElementById('githubFollowers').textContent = userData.followers;
+    // Fetch repos for star count
+    const reposRes = await fetch(
+      `https://api.github.com/users/${username}/repos?per_page=100`,
+      { headers: { 
+        'Accept': 'application/vnd.github.v3+json' 
+      }}
+    );
+    if (!reposRes.ok) throw new Error('Repos fetch failed');
+    const reposData = await reposRes.json();
 
-        // Calculate total stars
-        const totalStars = reposData.reduce((sum, repo) => sum + repo.stargazers_count, 0);
-        document.getElementById('githubStars').textContent = totalStars;
+    const totalStars = reposData.reduce(
+      (sum, repo) => sum + (repo.stargazers_count || 0), 0
+    );
 
-        // Calculate recent commits (using Events API to avoid CORS issues)
-        const commitsResponse = await fetch(`https://api.github.com/users/${username}/events/public`);
-        if (commitsResponse.ok) {
-          const eventsData = await commitsResponse.json();
-          const pushEventsCount = eventsData.filter(event => event.type === 'PushEvent').length;
-          document.getElementById('githubCommits').textContent = pushEventsCount;
-        }
+    // Count total commits across all repos
+    // Use repo commit count as a proxy
+    let totalCommits = 0;
+    const commitPromises = reposData
+      .slice(0, 10) // top 10 most recent repos
+      .map(repo =>
+        fetch(
+          `https://api.github.com/repos/${username}/${repo.name}/commits?per_page=1`,
+          { headers: { 
+            'Accept': 'application/vnd.github.v3+json' 
+          }}
+        ).then(res => {
+          // GitHub returns total count in Link header
+          const link = res.headers.get('Link');
+          if (link) {
+            const match = link.match(
+              /page=(\d+)>; rel="last"/
+            );
+            if (match) return parseInt(match[1]);
+          }
+          return 1;
+        }).catch(() => 0)
+      );
+
+    const commitCounts = await Promise.all(commitPromises);
+    totalCommits = commitCounts.reduce(
+      (sum, count) => sum + count, 0
+    );
+
+    // Store final values globally for scroll trigger
+    window._githubStats = {
+      githubRepos: userData.public_repos || 0,
+      githubStars: totalStars || 0,
+      githubFollowers: userData.followers || 0,
+      githubCommits: totalCommits || 0
+    };
+
+    // Mark as ready, hide loading state
+    statIds.forEach(id => {
+      const el = document.getElementById(id);
+      if (el) {
+        el.textContent = '0';
+        el.style.opacity = '1';
       }
-    } catch (error) {
-      console.error('Error fetching GitHub data:', error);
-      // Show fallback data
-      document.getElementById('githubRepos').textContent = '15+';
-      document.getElementById('githubStars').textContent = '25+';
-      document.getElementById('githubFollowers').textContent = '10+';
-      document.getElementById('githubCommits').textContent = '50+';
+    });
+
+    // Trigger count-up if section already visible
+    if (window._githubSectionVisible) {
+      runGithubCountUp();
+    }
+
+  } catch (error) {
+    console.error('GitHub stats error:', error);
+
+    window._githubStats = {
+      githubRepos: 14,
+      githubStars: 35,
+      githubFollowers: 5,
+      githubCommits: 80
+    };
+
+    statIds.forEach(id => {
+      const el = document.getElementById(id);
+      if (el) {
+        el.textContent = '0';
+        el.style.opacity = '1';
+      }
+    });
+
+    if (window._githubSectionVisible) {
+      runGithubCountUp();
     }
   }
+}
 
-  // Initialize GitHub data loading
-  fetchGitHubData();
-});
+// Count-up animation function
+function runGithubCountUp() {
+  if (!window._githubStats) return;
+
+  Object.entries(window._githubStats).forEach(
+    ([id, targetValue]) => {
+      const el = document.getElementById(id);
+      if (!el) return;
+
+      let current = 0;
+      const duration = 1800;
+      const steps = 50;
+      const increment = targetValue / steps;
+      const intervalTime = duration / steps;
+
+      // Clear any existing interval
+      if (el._countInterval) {
+        clearInterval(el._countInterval);
+      }
+
+      el._countInterval = setInterval(() => {
+        current += increment;
+        if (current >= targetValue) {
+          current = targetValue;
+          clearInterval(el._countInterval);
+        }
+        el.textContent = Math.floor(current);
+      }, intervalTime);
+    }
+  );
+}
+
+// IntersectionObserver — trigger count-up 
+// only when user scrolls to the section
+const githubSection = document.querySelector(
+  '#github-activity'
+);
+
+if (githubSection) {
+  const githubObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          window._githubSectionVisible = true;
+
+          // If data already loaded, count up now
+          if (window._githubStats) {
+            runGithubCountUp();
+          }
+          // Otherwise fetchGitHubStats will call 
+          // runGithubCountUp when data arrives
+
+          // Only trigger once
+          githubObserver.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0.3 }
+  );
+
+  githubObserver.observe(githubSection);
+}
+
+// Start fetching data immediately on load
+// but count-up waits for scroll
+window._githubSectionVisible = false;
+fetchGitHubStats();
 
 // Back to Top Button Functionality
 const backToTopButton = document.getElementById('backToTop');
