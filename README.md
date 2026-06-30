@@ -2,7 +2,7 @@
 
 # 💼 Vishal Rai — Portfolio Website
 
-[![Live Demo](https://img.shields.io/badge/Live%20Demo-Visit%20Site-blue?style=for-the-badge)](https://rai0vishal.github.io/Portfolio/)
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-Visit%20Site-blue?style=for-the-badge)](https://vishalrai-portfolio.vercel.app)
 [![GitHub](https://img.shields.io/badge/GitHub-rai0vishal-black?style=for-the-badge&logo=github)](https://github.com/rai0vishal)
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-VishalRai0108-blue?style=for-the-badge&logo=linkedin)](https://linkedin.com/in/VishalRai0108)
 
